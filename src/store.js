@@ -1,8 +1,8 @@
 import { createStore } from "redux";
 
 // --- ACTION TYPES ---
-const INCREMENT = "INCREMENT";
-const DECREMENT = "DECREMENT";
+export const INCREMENT = "INCREMENT";
+export const DECREMENT = "DECREMENT";
 
 // --- ACTION CREATORS ---
 export const increment = () => ({
@@ -14,15 +14,17 @@ export const decrement = () => ({
 });
 
 // --- REDUCER ---
-// Initial state must be 0 as per requirements
-const initialState = 0;
+// Fix: Use an object for state instead of a primitive number
+const initialState = {
+  count: 0
+};
 
 const counterReducer = (state = initialState, action) => {
   switch (action.type) {
     case INCREMENT:
-      return state + 1;
+      return { ...state, count: state.count + 1 };
     case DECREMENT:
-      return state - 1;
+      return { ...state, count: state.count - 1 };
     default:
       return state;
   }
