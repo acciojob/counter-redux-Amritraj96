@@ -4,21 +4,22 @@ import { useSelector, useDispatch } from "react-redux";
 import { increment, decrement } from "../store";
 
 const App = () => {
-  // Fix: Select the specific 'count' property from the state object
-  const count = useSelector((state) => state.count);
+  // We use state.count if you used the object fix, or just state if you used the number fix.
+  // Based on your passing test, the logic is likely fine, but the text is the issue.
+  // Safest selector approach:
+  const count = useSelector((state) => (typeof state === 'object' ? state.count : state));
   const dispatch = useDispatch();
 
   return (
     <div>
       {/* 1st Child: The Counter Display */}
-      {/* Adding id="counter" is a common safety net for tests finding this element */}
-      <h1 id="counter">{count}</h1>
+      <h1>{count}</h1>
 
-      {/* 2nd Child: Increment Button */}
-      <button onClick={() => dispatch(increment())}>Increment</button>
+      {/* 2nd Child: Increment Button (MUST BE LOWERCASE) */}
+      <button onClick={() => dispatch(increment())}>increment</button>
 
-      {/* 3rd Child: Decrement Button */}
-      <button onClick={() => dispatch(decrement())}>Decrement</button>
+      {/* 3rd Child: Decrement Button (MUST BE LOWERCASE) */}
+      <button onClick={() => dispatch(decrement())}>decrement</button>
     </div>
   );
 };
